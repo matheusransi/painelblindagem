@@ -1,10 +1,9 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Painel da Blindagem</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: cabeçalho escuro com anéis de impacto e números, destaques em cards coloridos, feed em grade de cards por categoria, alertas em pílulas. */
 :root {
   --bg: #EDF1EF;
   --surface: #FFFFFF;
@@ -71,7 +70,7 @@
   --c-mat: #F2B15C;         --c-mat-bg: #3A2A12;
   --c-eventos: #FF8DAE;     --c-eventos-bg: #3E1827;
   --c-intl: #7DB8F2;        --c-intl-bg: #15304D;
-    --c-blind: #FF9C85;       --c-blind-bg: #3F1D15;
+  --c-blind: #FF9C85;       --c-blind-bg: #3F1D15;
   color-scheme: dark;
 }
 
@@ -89,7 +88,6 @@ a { color: var(--accent); text-underline-offset: 3px; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .mono { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
 
-/* Categoria define as cores do card */
 [data-cat^="mercado"] { --cc: var(--c-mercado); --cc-bg: var(--c-mercado-bg); }
 [data-cat^="blindadoras"] { --cc: var(--c-blind); --cc-bg: var(--c-blind-bg); }
 [data-cat^="regulamentacao"] { --cc: var(--c-reg); --cc-bg: var(--c-reg-bg); }
@@ -97,7 +95,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 [data-cat^="eventos"] { --cc: var(--c-eventos); --cc-bg: var(--c-eventos-bg); }
 [data-cat^="internacional"] { --cc: var(--c-intl); --cc-bg: var(--c-intl-bg); }
 
-/* Cabeçalho */
 .hero {
   position: relative;
   overflow: hidden;
@@ -121,13 +118,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .stat span { font-size: 14px; line-height: 1.35; }
 .stat small { color: var(--hero-muted); font-size: 12px; line-height: 1.4; }
 
-/* Seções */
 .section { display: flex; flex-direction: column; gap: 16px; }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 h2 { font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: -0.01em; margin: 0; }
 .section-head .mono { color: var(--muted); }
 
-/* Destaques */
 .highlights { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
 @media (min-width: 640px) { .highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1000px) { .highlights { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
@@ -136,14 +131,12 @@ h2 { font-family: var(--font-display); font-weight: 700; font-size: 28px; letter
 .hl h3 { font-family: var(--font-display); font-weight: 700; font-size: 21px; line-height: 1.2; letter-spacing: -0.005em; margin: 0; text-wrap: balance; }
 .hl p { margin: 0; font-size: 14px; color: var(--ink); opacity: 0.82; }
 
-/* Filtro */
 .filter { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; background: var(--bg); padding-block: 8px; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { font: 500 14px var(--font-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; cursor: pointer; }
 .chip:hover { border-color: var(--accent); }
 .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 
-/* Feed em cards */
 .feed { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 16px; }
 .item { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
@@ -155,12 +148,10 @@ h2 { font-family: var(--font-display); font-weight: 700; font-size: 28px; letter
 .src { margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--muted); }
 .empty { grid-column: 1 / -1; padding: 24px 0; color: var(--muted); }
 
-/* Ranking */
 .rank { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; list-style: none; }
 .rank li { font-size: 13px; background: var(--cc-bg); color: var(--ink); border-radius: 999px; padding: 4px 12px 4px 6px; display: flex; align-items: center; gap: 8px; }
 .rank li b { font-family: var(--font-mono); font-weight: 500; font-size: 11px; background: var(--cc); color: var(--surface); border-radius: 999px; min-width: 22px; text-align: center; padding: 2px 4px; }
 
-/* Alertas */
 .lead { margin: 0; max-width: 70ch; color: var(--muted); }
 .alerts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 10px; }
 .alert { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 8px 8px 18px; min-width: 0; }
@@ -184,7 +175,7 @@ footer p { margin: 0; }
 
   <header class="hero">
     <div class="hero-top">
-      <span class="mono">Edição nº 1 · atualizada em quinta-feira, 8 de outubro de 2026</span>
+      <span class="mono">Edição nº 2 · atualizada em sexta-feira, 9 de outubro de 2026</span>
       <h1>Painel da Blindagem</h1>
       <p>Mercado, regulamentação, materiais e eventos do setor de blindagem automotiva, reunidos em um só lugar e organizados por categoria.</p>
     </div>
@@ -192,7 +183,7 @@ footer p { margin: 0; }
       <div class="stat"><b>17.290</b><span>autorizações de blindagem no 1º semestre de 2026</span><small>Abrablin / Exército · recorde para um semestre</small></div>
       <div class="stat"><b>+4,6%</b><span>sobre o 1º semestre de 2025</span><small>No 1º trimestre, a alta foi de 6,5% (8.550 autorizações)</small></div>
       <div class="stat"><b>42,8 mil</b><span>veículos blindados em 2025</span><small>+24,6% sobre 2024 · maior marca da série histórica</small></div>
-      <div class="stat"><b>R$ 3,5 bi</b><span>movimentados pelo setor em 2025</span><small>Abrablin projeta +16% em 2026</small></div>
+      <div class="stat"><b>R$ 371,5 mi</b><span>em créditos no pedido de recuperação extrajudicial da Carbon</span><small>47,63% de adesão já declarada · setor movimentou R$ 3,5 bi em 2025</small></div>
     </div>
   </header>
 
@@ -200,9 +191,9 @@ footer p { margin: 0; }
     <div class="section-head"><h2 id="h-destaques">Destaques</h2><span class="mono">4 itens que merecem atenção</span></div>
     <div class="highlights">
       <article class="hl" data-cat="blindadoras">
-        <span class="when">Hoje · 7 de outubro</span>
-        <h3>Carbon, maior blindadora do país, pede recuperação extrajudicial</h3>
-        <p>O plano cobre R$ 371,5 milhões em dívidas de três empresas do grupo. A Carbon já reuniu adesão de 47,63% dos créditos e tem 90 dias para passar de 50%.</p>
+        <span class="when">Esta semana · 5 a 8 de outubro</span>
+        <h3>Carbon: recuperação extrajudicial ainda aguarda decisão da Justiça</h3>
+        <p>Segundo as reportagens, o juízo ainda não havia decidido sobre o processamento até quarta-feira (7). Faltam cerca de R$ 8,8 milhões em novas adesões para o plano passar de 50% dos créditos. Nenhuma matéria encontrada traz comunicado da Carbon sobre o atendimento aos clientes.</p>
       </article>
       <article class="hl" data-cat="eventos">
         <span class="when">14 e 15 de outubro</span>
@@ -212,7 +203,7 @@ footer p { margin: 0; }
       <article class="hl" data-cat="regulamentacao">
         <span class="when">Em vigor desde maio</span>
         <h3>Portaria COLOG/C Ex nº 290/2026 reorganiza as normas de blindagem</h3>
-        <p>A norma publicada no DOU em 7 de maio trata de blindadoras, fabricantes, locadoras e do fluxo no SICOVAB. A Portaria nº 294/2026 traz ajustes e regras de transição.</p>
+        <p>A norma publicada no DOU em 7 de maio trata de blindadoras, fabricantes, locadoras e do fluxo no SICOVAB. A Portaria nº 294/2026 traz ajustes e regras de transição. Não achei desdobramentos novos nesta edição.</p>
       </article>
       <article class="hl" data-cat="mercado">
         <span class="when">Agosto</span>
@@ -239,11 +230,33 @@ footer p { margin: 0; }
     <div class="feed" id="feed">
 
       <article class="item" data-cat="blindadoras">
+        <div class="meta"><span class="tag">Blindadoras</span><span class="prio">Alta</span><span class="date">06–08/10/2026</span></div>
+        <h3>Carbon: credores, prazos e o que falta para o plano valer</h3>
+        <p>O pedido envolve C Blindados, Opera Glass e Vertco e soma R$ 371,47 milhões em créditos. O plano foi assinado em 21/9, e credores com 47,63% dos créditos já aderiram (entre eles Amadeus FIDC, SSG FIDC e Bradesco). Faltam cerca de R$ 8,8 milhões para passar de 50%; Digimais, Banco do Brasil, Santander e Porto Seguro ainda não constam entre os signatários. Para quem não aportar dinheiro novo, a proposta prevê pagamento em até 18 parcelas, com recuperação de 5% a 15% do crédito. Quem colocar de R$ 60 milhões a R$ 100 milhões recebe o valor integral, com juros atrelados ao DI.</p>
+        <p>Segundo o PreservaCred, o processo caiu na 1ª Vara de Falências e Recuperações Judiciais de São Paulo, e o grupo pede a redistribuição para a vara empresarial regional. O juízo ainda não decidiu sobre o processamento nem sobre a liminar que suspenderia despejos em três imóveis (Barueri, Rio e Jarinu). O edital abre 30 dias para impugnações, e o grupo tem 90 dias para obter a maioria. As fontes divergem na data do protocolo: o PreservaCred indica 5/10 e a BPMoney também cita o dia 5, mas o chama de domingo, o que não bate com o calendário. Confirme a data nos autos.</p>
+        <span class="src">Fontes: <a href="https://bpmoney.com.br/negocios/empresas/carbon-blindadora-recuperacao-extrajudicial-371-milhoes/" target="_blank" rel="noopener">BPMoney</a> · <a href="https://preservacred.com.br/noticias/grupo-carbon-recuperacao-extrajudicial-2026" target="_blank" rel="noopener">PreservaCred</a> · <a href="https://www.capitalaberto.com.br/empresas/2026/10/carbon-entra-com-pedido-de-recuperacao-extrajudicial" target="_blank" rel="noopener">Capital Aberto</a></span>
+      </article>
+
+      <article class="item" data-cat="blindadoras">
         <div class="meta"><span class="tag">Blindadoras</span><span class="prio">Alta</span><span class="date">07/10/2026</span></div>
         <h3>Carbon, maior blindadora do país, pede recuperação extrajudicial</h3>
-        <p>A Carbon tem cerca de 16% das blindagens do Brasil e mais de 6 mil veículos em 2025. O pedido foi protocolado na Justiça de São Paulo e abrange R$ 371,5 milhões em créditos de três empresas do grupo: C Blindados, Opera Glass e Vertco. Não é recuperação judicial: o plano é negociado com os credores, e a empresa já tem adesão de 47,63% dos créditos (R$ 194,6 milhões), acima do mínimo legal de um terço. O prazo para passar de 50% é de 90 dias. Os credores financeiros somam 85% do passivo, e o plano prevê redução da dívida, prazos maiores e abertura para dinheiro novo.</p>
-        <p>Em 2025, a receita líquida foi de R$ 673 milhões e o Ebitda, de R$ 41 milhões, com R$ 139 milhões vencendo em 12 meses para uma geração de caixa de R$ 52 milhões. A empresa culpa a verticalização que demorou a dar retorno, a dívida cara, a Selic alta e o atraso na fábrica de vidros de Jarinu, que custou R$ 80 milhões, só começou a operar em abril de 2026 e roda abaixo da metade da capacidade. A reportagem questiona a explicação, já que o mercado de blindagem está em alta. Um fundo credor já havia pedido a falência da Carbon. Por ora, encontrei só esta fonte sobre o caso.</p>
-        <span class="src">Fonte: <a href="https://www.capitalaberto.com.br/empresas/2026/10/carbon-entra-com-pedido-de-recuperacao-extrajudicial" target="_blank" rel="noopener">Capital Aberto</a></span>
+        <p>A Carbon tem cerca de 16% das blindagens do Brasil e mais de 6 mil veículos em 2025. Não é recuperação judicial: o plano é negociado com os credores, e a adesão declarada está acima do mínimo legal de um terço. Os credores financeiros somam 85% do passivo. Em 2025, a receita líquida foi de R$ 673 milhões e o Ebitda, de R$ 41 milhões, com R$ 139 milhões vencendo em 12 meses para uma geração de caixa de R$ 52 milhões; o custo médio da dívida é de cerca de 22% ao ano.</p>
+        <p>A empresa aponta a verticalização que demorou a dar retorno, o crédito caro, a Selic alta e o atraso na fábrica de vidros de Jarinu (cerca de R$ 80 milhões investidos), que só começou a operar em abril de 2026. A Capital Aberto questiona a explicação, já que o mercado de blindagem está em alta. Um fundo credor pediu a falência da C Blindados em maio de 2026, segundo o PreservaCred.</p>
+        <span class="src">Fontes: <a href="https://www.capitalaberto.com.br/empresas/2026/10/carbon-entra-com-pedido-de-recuperacao-extrajudicial" target="_blank" rel="noopener">Capital Aberto</a> · <a href="https://preservacred.com.br/noticias/grupo-carbon-recuperacao-extrajudicial-2026" target="_blank" rel="noopener">PreservaCred</a></span>
+      </article>
+
+      <article class="item" data-cat="blindadoras">
+        <div class="meta"><span class="tag">Blindadoras</span><span class="date">08/10/2026</span></div>
+        <h3>Carbon: o que o cliente deve fazer enquanto o caso corre</h3>
+        <p>Um guia da BlindaPrime afirma que o pedido não cancela automaticamente as garantias, que cada caso depende do contrato e que não há indicação de paralisação dos serviços. Recomenda confirmar revisões e atendimentos por canais com registro, guardar certificados, laudos, notas e termos de garantia, e pedir avaliação técnica independente antes de comprar um usado. Atenção: a BlindaPrime vende assessoria e avaliação de blindados, e o texto não traz comunicado oficial da Carbon. Trate como orientação de um terceiro interessado.</p>
+        <span class="src">Fonte única: <a href="https://blindaprime.com.br/carbon-blindados-pede-recuperacao-extrajudicial-entenda-o-que-aconteceu-e-o-que-muda-para-os-clientes/" target="_blank" rel="noopener">BlindaPrime</a></span>
+      </article>
+
+      <article class="item" data-cat="blindadoras">
+        <div class="meta"><span class="tag">Blindadoras</span><span class="date">Abr/2026</span></div>
+        <h3>Avallon blinda o novo Toyota RAV4 com garantia da montadora</h3>
+        <p>A opção certificada é nível III-A e entra no programa Toyota 10, que cobre a blindagem pelo mesmo prazo do veículo: até 10 anos ou 200 mil km no uso particular, sem custo extra de garantia. A matéria não traz data de publicação; o lançamento do RAV4 é citado como de abril de 2026.</p>
+        <span class="src">Fonte única: <a href="https://www.comprecar.com.br/revista/novo-toyota-rav4-ganha-opcao-de-blindagem-certificada" target="_blank" rel="noopener">Compre Car</a></span>
       </article>
 
       <article class="item" data-cat="blindadoras">
@@ -256,7 +269,7 @@ footer p { margin: 0; }
       <article class="item" data-cat="blindadoras">
         <div class="meta"><span class="tag">Blindadoras</span><span class="date">Dez/2024–mar/2025</span></div>
         <h3>Antes do pedido: Carbon chegou ao Rio, uniu-se à Revo e investiu em Jarinu</h3>
-        <p>As unidades da Carbon na Barra da Tijuca e em Botafogo foram anunciadas em dezembro de 2024, e essa é a entrada da empresa no Rio que circulou na imprensa. Em março de 2025, Carbon e Revo criaram uma nova empresa, com previsão de atender cerca de 3.100 veículos por mês e faturamento conjunto de cerca de R$ 800 milhões em 2025. No mesmo mês, a Carbon disse investir R$ 50 milhões na fábrica de vidros de Jarinu (SP), a mesma planta citada agora no pedido.</p>
+        <p>As unidades da Carbon na Barra da Tijuca e em Botafogo foram anunciadas em dezembro de 2024. Em março de 2025, Carbon e Revo criaram uma nova empresa, com previsão de atender cerca de 3.100 veículos por mês e faturamento conjunto de cerca de R$ 800 milhões em 2025. No mesmo mês, a Carbon disse investir R$ 50 milhões na fábrica de vidros de Jarinu (SP), a mesma planta citada agora no pedido.</p>
         <span class="src">Fontes: <a href="https://mecanicaonline.com.br/2024/12/carbon-inaugura-unidades-na-barra-da-tijuca-e-botafogo-marcando-sua-chegada-ao-rio-de-janeiro" target="_blank" rel="noopener">Mecânica Online</a> · <a href="https://www.automaistv.com.br/novidades/carbon-e-revo-anunciam-parceria-e-criacao-de-nova-empresa/" target="_blank" rel="noopener">Auto Mais TV</a> · <a href="https://www.autodata.com.br/noticias/2025/03/24/blindagem-de-veiculos-bate-recorde-e-setor-investe-em-novas-fabricas/85797/" target="_blank" rel="noopener">Autodata</a></span>
       </article>
 
@@ -284,13 +297,6 @@ footer p { margin: 0; }
         <span class="src">Fontes: <a href="https://mecanicaonline.com.br/tag/abrablin/" target="_blank" rel="noopener">Mecânica Online</a> · <a href="https://paraibabusiness.com.br/byd-song-plus-lidera-ranking-dos-carros-mais-blindados-do-brasil-em-2026/" target="_blank" rel="noopener">Paraíba Business</a></span>
       </article>
 
-      <article class="item" data-cat="blindadoras">
-        <div class="meta"><span class="tag">Blindadoras</span><span class="date">2026</span></div>
-        <h3>Blindadoras disputam homologação das montadoras e ampliam fábricas</h3>
-        <p>Num mercado fragmentado, as maiores empresas buscam a homologação das montadoras para se diferenciar. Ao mesmo tempo, precisam atender uma variedade crescente de modelos, o que complica o processo produtivo.</p>
-        <span class="src">Fonte: <a href="https://investnews.com.br/negocios/blindados-a-industria-de-r-35-bilhoes-que-cresce-de-carona-no-medo-de-assaltos-dos-brasileiros/amp/" target="_blank" rel="noopener">InvestNews</a></span>
-      </article>
-
       <article class="item" data-cat="mercado">
         <div class="meta"><span class="tag">Mercado</span><span class="date">Abr–mai/2026</span></div>
         <h3>Webmotors lança concierge de blindagem; buscas por blindados novos crescem</h3>
@@ -308,7 +314,7 @@ footer p { margin: 0; }
       <article class="item" data-cat="regulamentacao">
         <div class="meta"><span class="tag">Regulamentação</span><span class="prio">Alta</span><span class="date">04/05/2026</span></div>
         <h3>Portarias COLOG nº 290 e nº 294 de 2026: novas normas e transição</h3>
-        <p>A Portaria 290 foi publicada no DOU em 7 de maio e define blindadora, fabricante e locadora de veículo blindado, além do papel do SICOVAB. O Termo de Responsabilidade de Blindagem deve ser assinado por responsável técnico com registro no CREA. A Portaria 294 traz regras de transição. Vale conferir com a equipe de documentação e o responsável técnico o que muda na rotina.</p>
+        <p>A Portaria 290 foi publicada no DOU em 7 de maio e define blindadora, fabricante e locadora de veículo blindado, além do papel do SICOVAB. O Termo de Responsabilidade de Blindagem deve ser assinado por responsável técnico com registro no CREA. A Portaria 294 traz regras de transição. Nesta edição não encontrei notícia nova sobre elas, e as datas aparecem de forma diferente em alguns repositórios, então confirme no DOU. Vale conferir com a equipe de documentação e o responsável técnico o que muda na rotina.</p>
         <span class="src">Fontes: <a href="https://www.legisweb.com.br/legislacao/?id=495406" target="_blank" rel="noopener">Legisweb</a> · <a href="https://diretolegaliza.com/?p=13971" target="_blank" rel="noopener">Direto Legaliza</a></span>
       </article>
 
@@ -317,13 +323,6 @@ footer p { margin: 0; }
         <h3>Projeto de lei prevê teto solar fixo e proíbe reautoclavagem de vidros</h3>
         <p>A Comissão de Segurança Pública da Câmara aprovou o texto, que ainda segue sua tramitação. O teto solar blindado teria de ser peça única e fixa, com a mesma proteção do restante do carro. Vidros com bolhas ou descolamento seriam substituídos por peça nova, com rastreabilidade do material descartado. O texto também autoriza a blindagem parcial.</p>
         <span class="src">Fonte: <a href="https://www.vrum.com.br/noticias/2026/02/7353035-blindagem-no-brasil-deve-receber-novas-regras-confira.html" target="_blank" rel="noopener">Vrum</a></span>
-      </article>
-
-      <article class="item" data-cat="regulamentacao">
-        <div class="meta"><span class="tag">Regulamentação</span><span class="date">Jan/2026</span></div>
-        <h3>Consulta pública da DFPC sobre avaliação da conformidade de produtos controlados</h3>
-        <p>A consulta nº 04/2025 foi encerrada em 21 de janeiro e trata das regras de certificação dos produtos controlados pelo Exército. A discussão continua no portal Brasil Participativo, em endereço que a DFPC divulgará.</p>
-        <span class="src">Fonte: <a href="https://www.gov.br/participamaisbrasil/consulta-publica-n-04-revisao-da-portaria-n-189-eme-de-18-de-agosto-de-2020-avaliacao-da-conformidade-de-produtos-controlados-pelo-exercito" target="_blank" rel="noopener">Brasil Participativo</a></span>
       </article>
 
       <article class="item" data-cat="regulamentacao">
@@ -389,7 +388,7 @@ footer p { margin: 0; }
   </section>
 
   <div class="note">
-    <p><b>Sobre esta edição.</b> A busca geral não trouxe muitas notícias dos últimos dias. A exceção é o pedido de recuperação extrajudicial da Carbon, de 7 de outubro. O restante reúne o que há de mais recente e relevante entre fevereiro e outubro de 2026. Itens sem data exata estão marcados só com o ano. Números de mercado vêm da Abrablin, repassados pela imprensa.</p>
+    <p><b>Sobre esta edição.</b> A novidade desta edição é o desdobramento do caso Carbon: apareceram novas matérias (BPMoney, PreservaCred e BlindaPrime) com dados do processo, e nenhuma delas registra decisão judicial ainda. Sobre as Portarias COLOG 290 e 294, EXPOBLINDAGEM, materiais e mercado internacional, a busca não achou notícia nova; esses itens continuam os da edição anterior. Itens sem data exata estão marcados só com mês ou ano. Números de mercado vêm da Abrablin, repassados pela imprensa. Cada item cita suas fontes, e os que têm uma só estão indicados como fonte única.</p>
   </div>
 
   <footer>
