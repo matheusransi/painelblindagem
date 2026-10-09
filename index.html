@@ -1,0 +1,448 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Painel da Blindagem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: cabeçalho escuro com anéis de impacto e números, destaques em cards coloridos, feed em grade de cards por categoria, alertas em pílulas. */
+:root {
+  --bg: #EDF1EF;
+  --surface: #FFFFFF;
+  --ink: #0C1F1A;
+  --muted: #55676B;
+  --line: #D8E0DD;
+  --accent: #0F8B6D;
+  --accent-ink: #FFFFFF;
+  --shadow: 0 1px 2px rgba(10, 30, 25, 0.06), 0 10px 28px rgba(10, 30, 25, 0.06);
+
+  --hero-a: #0A3A30;
+  --hero-b: #0F6B55;
+  --hero-ink: #F2FBF7;
+  --hero-muted: #A7CFC2;
+  --hero-tile: rgba(255, 255, 255, 0.09);
+  --hero-tile-line: rgba(255, 255, 255, 0.16);
+  --hero-ring: rgba(255, 255, 255, 0.07);
+
+  --c-mercado: #0B7A5E;     --c-mercado-bg: #DAF2EA;
+  --c-reg: #5A47D0;         --c-reg-bg: #E8E4FB;
+  --c-mat: #B05A06;         --c-mat-bg: #FBEBD2;
+  --c-eventos: #C22D59;     --c-eventos-bg: #FBE0E8;
+  --c-intl: #1B66B5;        --c-intl-bg: #DBE9F8;
+  --c-blind: #B03A1E;       --c-blind-bg: #FADFD6;
+
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #08110F;
+    --surface: #101C19;
+    --ink: #E8F2EE;
+    --muted: #8FA7A0;
+    --line: #1E302B;
+    --accent: #3FD0A5;
+    --accent-ink: #062018;
+    --shadow: 0 0 0 rgba(0, 0, 0, 0);
+    --hero-a: #0B2B24;
+    --hero-b: #0C4A3C;
+    --c-mercado: #4ADBB0;     --c-mercado-bg: #12332B;
+    --c-reg: #A99CFF;         --c-reg-bg: #25214A;
+    --c-mat: #F2B15C;         --c-mat-bg: #3A2A12;
+    --c-eventos: #FF8DAE;     --c-eventos-bg: #3E1827;
+    --c-intl: #7DB8F2;        --c-intl-bg: #15304D;
+    --c-blind: #FF9C85;       --c-blind-bg: #3F1D15;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #08110F;
+  --surface: #101C19;
+  --ink: #E8F2EE;
+  --muted: #8FA7A0;
+  --line: #1E302B;
+  --accent: #3FD0A5;
+  --accent-ink: #062018;
+  --shadow: 0 0 0 rgba(0, 0, 0, 0);
+  --hero-a: #0B2B24;
+  --hero-b: #0C4A3C;
+  --c-mercado: #4ADBB0;     --c-mercado-bg: #12332B;
+  --c-reg: #A99CFF;         --c-reg-bg: #25214A;
+  --c-mat: #F2B15C;         --c-mat-bg: #3A2A12;
+  --c-eventos: #FF8DAE;     --c-eventos-bg: #3E1827;
+  --c-intl: #7DB8F2;        --c-intl-bg: #15304D;
+    --c-blind: #FF9C85;       --c-blind-bg: #3F1D15;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  padding-inline: clamp(16px, 4vw, 40px);
+  padding-block: 20px 56px;
+}
+.wrap { max-width: 1120px; margin-inline: auto; display: flex; flex-direction: column; gap: 40px; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mono { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+
+/* Categoria define as cores do card */
+[data-cat^="mercado"] { --cc: var(--c-mercado); --cc-bg: var(--c-mercado-bg); }
+[data-cat^="blindadoras"] { --cc: var(--c-blind); --cc-bg: var(--c-blind-bg); }
+[data-cat^="regulamentacao"] { --cc: var(--c-reg); --cc-bg: var(--c-reg-bg); }
+[data-cat^="materiais"] { --cc: var(--c-mat); --cc-bg: var(--c-mat-bg); }
+[data-cat^="eventos"] { --cc: var(--c-eventos); --cc-bg: var(--c-eventos-bg); }
+[data-cat^="internacional"] { --cc: var(--c-intl); --cc-bg: var(--c-intl-bg); }
+
+/* Cabeçalho */
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  padding: clamp(22px, 4vw, 40px);
+  color: var(--hero-ink);
+  background:
+    repeating-radial-gradient(circle at 94% 8%, transparent 0 34px, var(--hero-ring) 34px 35px),
+    linear-gradient(135deg, var(--hero-a), var(--hero-b));
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.hero-top { display: flex; flex-direction: column; gap: 12px; max-width: 640px; }
+.hero .mono { color: var(--hero-muted); }
+.hero h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(40px, 8vw, 76px); line-height: 0.96; letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+.hero p { margin: 0; color: var(--hero-muted); font-size: 16px; max-width: 54ch; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.stat { background: var(--hero-tile); border: 1px solid var(--hero-tile-line); border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.stat b { font-family: var(--font-display); font-weight: 700; font-size: 38px; line-height: 1.05; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 14px; line-height: 1.35; }
+.stat small { color: var(--hero-muted); font-size: 12px; line-height: 1.4; }
+
+/* Seções */
+.section { display: flex; flex-direction: column; gap: 16px; }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+h2 { font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: -0.01em; margin: 0; }
+.section-head .mono { color: var(--muted); }
+
+/* Destaques */
+.highlights { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+@media (min-width: 640px) { .highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .highlights { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.hl { background: var(--cc-bg); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.hl .when { align-self: flex-start; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--cc); border: 1px solid var(--cc); border-radius: 999px; padding: 3px 11px; }
+.hl h3 { font-family: var(--font-display); font-weight: 700; font-size: 21px; line-height: 1.2; letter-spacing: -0.005em; margin: 0; text-wrap: balance; }
+.hl p { margin: 0; font-size: 14px; color: var(--ink); opacity: 0.82; }
+
+/* Filtro */
+.filter { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; background: var(--bg); padding-block: 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 500 14px var(--font-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+/* Feed em cards */
+.feed { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 16px; }
+.item { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.tag { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--cc); background: var(--cc-bg); border-radius: 999px; padding: 3px 10px; }
+.prio { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--bg); background: var(--ink); border-radius: 999px; padding: 3px 10px; }
+.date { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-left: auto; letter-spacing: 0.03em; }
+.item h3 { font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.25; letter-spacing: -0.005em; margin: 0; text-wrap: balance; }
+.item p { margin: 0; font-size: 14.5px; color: var(--muted); }
+.src { margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--muted); }
+.empty { grid-column: 1 / -1; padding: 24px 0; color: var(--muted); }
+
+/* Ranking */
+.rank { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; list-style: none; }
+.rank li { font-size: 13px; background: var(--cc-bg); color: var(--ink); border-radius: 999px; padding: 4px 12px 4px 6px; display: flex; align-items: center; gap: 8px; }
+.rank li b { font-family: var(--font-mono); font-weight: 500; font-size: 11px; background: var(--cc); color: var(--surface); border-radius: 999px; min-width: 22px; text-align: center; padding: 2px 4px; }
+
+/* Alertas */
+.lead { margin: 0; max-width: 70ch; color: var(--muted); }
+.alerts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 10px; }
+.alert { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 8px 8px 18px; min-width: 0; }
+.alert code { font-family: var(--font-mono); font-size: 13px; overflow-wrap: anywhere; min-width: 0; }
+.copy { flex: none; font: 600 12px var(--font-body); color: var(--accent-ink); background: var(--accent); border: 0; border-radius: 999px; padding: 7px 14px; cursor: pointer; }
+.copy:hover { filter: brightness(1.08); }
+
+.note { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 18px 20px; font-size: 14px; color: var(--muted); }
+.note p { margin: 0; max-width: 80ch; }
+.note b { color: var(--ink); }
+footer { color: var(--muted); font-size: 13px; }
+footer p { margin: 0; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .chip, .copy, .item { transition: background-color 0.15s, border-color 0.15s, filter 0.15s, transform 0.2s; }
+  .item:hover { transform: translateY(-2px); }
+}
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-top">
+      <span class="mono">Edição nº 1 · atualizada em quinta-feira, 8 de outubro de 2026</span>
+      <h1>Painel da Blindagem</h1>
+      <p>Mercado, regulamentação, materiais e eventos do setor de blindagem automotiva, reunidos em um só lugar e organizados por categoria.</p>
+    </div>
+    <div class="stats" aria-label="Números do setor">
+      <div class="stat"><b>17.290</b><span>autorizações de blindagem no 1º semestre de 2026</span><small>Abrablin / Exército · recorde para um semestre</small></div>
+      <div class="stat"><b>+4,6%</b><span>sobre o 1º semestre de 2025</span><small>No 1º trimestre, a alta foi de 6,5% (8.550 autorizações)</small></div>
+      <div class="stat"><b>42,8 mil</b><span>veículos blindados em 2025</span><small>+24,6% sobre 2024 · maior marca da série histórica</small></div>
+      <div class="stat"><b>R$ 3,5 bi</b><span>movimentados pelo setor em 2025</span><small>Abrablin projeta +16% em 2026</small></div>
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="h-destaques">
+    <div class="section-head"><h2 id="h-destaques">Destaques</h2><span class="mono">4 itens que merecem atenção</span></div>
+    <div class="highlights">
+      <article class="hl" data-cat="blindadoras">
+        <span class="when">Hoje · 7 de outubro</span>
+        <h3>Carbon, maior blindadora do país, pede recuperação extrajudicial</h3>
+        <p>O plano cobre R$ 371,5 milhões em dívidas de três empresas do grupo. A Carbon já reuniu adesão de 47,63% dos créditos e tem 90 dias para passar de 50%.</p>
+      </article>
+      <article class="hl" data-cat="eventos">
+        <span class="when">14 e 15 de outubro</span>
+        <h3>EXPOBLINDAGEM 2026 acontece em São Paulo na semana que vem</h3>
+        <p>O evento dedicado ao ecossistema da blindagem automotiva reúne fabricantes, blindadoras, fornecedores de materiais, laboratórios e montadoras no Transamérica Expo Center.</p>
+      </article>
+      <article class="hl" data-cat="regulamentacao">
+        <span class="when">Em vigor desde maio</span>
+        <h3>Portaria COLOG/C Ex nº 290/2026 reorganiza as normas de blindagem</h3>
+        <p>A norma publicada no DOU em 7 de maio trata de blindadoras, fabricantes, locadoras e do fluxo no SICOVAB. A Portaria nº 294/2026 traz ajustes e regras de transição.</p>
+      </article>
+      <article class="hl" data-cat="mercado">
+        <span class="when">Agosto</span>
+        <h3>Primeiro semestre fecha com recorde e o Brasil segue como maior mercado civil</h3>
+        <p>O volume é quatro vezes o do México, o segundo colocado. SUVs eletrificados puxam a demanda, e o BYD Song Plus lidera o ranking.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-feed">
+    <div class="section-head"><h2 id="h-feed">Notícias por categoria</h2><span class="mono" id="count" aria-live="polite" style="color:var(--muted)"></span></div>
+    <div class="filter">
+      <div class="chips" role="group" aria-label="Filtrar por categoria">
+        <button class="chip" type="button" data-filter="todas" aria-pressed="true">Todas</button>
+        <button class="chip" type="button" data-filter="mercado" aria-pressed="false">Mercado</button>
+        <button class="chip" type="button" data-filter="blindadoras" aria-pressed="false">Blindadoras</button>
+        <button class="chip" type="button" data-filter="regulamentacao" aria-pressed="false">Regulamentação</button>
+        <button class="chip" type="button" data-filter="materiais" aria-pressed="false">Materiais</button>
+        <button class="chip" type="button" data-filter="eventos" aria-pressed="false">Eventos</button>
+        <button class="chip" type="button" data-filter="internacional" aria-pressed="false">Internacional</button>
+      </div>
+    </div>
+
+    <div class="feed" id="feed">
+
+      <article class="item" data-cat="blindadoras">
+        <div class="meta"><span class="tag">Blindadoras</span><span class="prio">Alta</span><span class="date">07/10/2026</span></div>
+        <h3>Carbon, maior blindadora do país, pede recuperação extrajudicial</h3>
+        <p>A Carbon tem cerca de 16% das blindagens do Brasil e mais de 6 mil veículos em 2025. O pedido foi protocolado na Justiça de São Paulo e abrange R$ 371,5 milhões em créditos de três empresas do grupo: C Blindados, Opera Glass e Vertco. Não é recuperação judicial: o plano é negociado com os credores, e a empresa já tem adesão de 47,63% dos créditos (R$ 194,6 milhões), acima do mínimo legal de um terço. O prazo para passar de 50% é de 90 dias. Os credores financeiros somam 85% do passivo, e o plano prevê redução da dívida, prazos maiores e abertura para dinheiro novo.</p>
+        <p>Em 2025, a receita líquida foi de R$ 673 milhões e o Ebitda, de R$ 41 milhões, com R$ 139 milhões vencendo em 12 meses para uma geração de caixa de R$ 52 milhões. A empresa culpa a verticalização que demorou a dar retorno, a dívida cara, a Selic alta e o atraso na fábrica de vidros de Jarinu, que custou R$ 80 milhões, só começou a operar em abril de 2026 e roda abaixo da metade da capacidade. A reportagem questiona a explicação, já que o mercado de blindagem está em alta. Um fundo credor já havia pedido a falência da Carbon. Por ora, encontrei só esta fonte sobre o caso.</p>
+        <span class="src">Fonte: <a href="https://www.capitalaberto.com.br/empresas/2026/10/carbon-entra-com-pedido-de-recuperacao-extrajudicial" target="_blank" rel="noopener">Capital Aberto</a></span>
+      </article>
+
+      <article class="item" data-cat="blindadoras">
+        <div class="meta"><span class="tag">Blindadoras</span><span class="date">06/03/2026</span></div>
+        <h3>Avallon recebe homologação da Stellantis para RAM e Jeep</h3>
+        <p>A blindadora entra no grupo de empresas certificadas pela montadora para Rampage, 1500, 2500 e 3500, além de Jeep Compass e Commander. Ela projeta elevar a produção mensal em cerca de 20%, com margem de até 30% com novos galpões, e a homologação mantém a garantia de cinco anos da blindagem. A Avallon também já tem certificações de BYD, Hyundai, Omoda &amp; Jaecoo, Toyota e Lexus.</p>
+        <span class="src">Fonte: <a href="https://www.vrum.com.br/mercado/2026/03/7369625-avallon-blindagens-recebe-homologacao-da-stellantis-para-modelos-ram-e-jeep.html" target="_blank" rel="noopener">Vrum</a></span>
+      </article>
+
+      <article class="item" data-cat="blindadoras">
+        <div class="meta"><span class="tag">Blindadoras</span><span class="date">Dez/2024–mar/2025</span></div>
+        <h3>Antes do pedido: Carbon chegou ao Rio, uniu-se à Revo e investiu em Jarinu</h3>
+        <p>As unidades da Carbon na Barra da Tijuca e em Botafogo foram anunciadas em dezembro de 2024, e essa é a entrada da empresa no Rio que circulou na imprensa. Em março de 2025, Carbon e Revo criaram uma nova empresa, com previsão de atender cerca de 3.100 veículos por mês e faturamento conjunto de cerca de R$ 800 milhões em 2025. No mesmo mês, a Carbon disse investir R$ 50 milhões na fábrica de vidros de Jarinu (SP), a mesma planta citada agora no pedido.</p>
+        <span class="src">Fontes: <a href="https://mecanicaonline.com.br/2024/12/carbon-inaugura-unidades-na-barra-da-tijuca-e-botafogo-marcando-sua-chegada-ao-rio-de-janeiro" target="_blank" rel="noopener">Mecânica Online</a> · <a href="https://www.automaistv.com.br/novidades/carbon-e-revo-anunciam-parceria-e-criacao-de-nova-empresa/" target="_blank" rel="noopener">Auto Mais TV</a> · <a href="https://www.autodata.com.br/noticias/2025/03/24/blindagem-de-veiculos-bate-recorde-e-setor-investe-em-novas-fabricas/85797/" target="_blank" rel="noopener">Autodata</a></span>
+      </article>
+
+      <article class="item" data-cat="mercado">
+        <div class="meta"><span class="tag">Mercado</span><span class="prio">Alta</span><span class="date">Ago/2026</span></div>
+        <h3>Brasil bate recorde de autorizações no primeiro semestre</h3>
+        <p>Foram 17.290 autorizações entre janeiro e junho, 4,6% acima do mesmo período de 2025. A Abrablin espera fechar o ano com novo recorde. O país tem hoje mais de 425 mil blindados em circulação, o que alimenta também o mercado de usados, e o preço dos sistemas nível III-A caiu cerca de 25% em dez anos.</p>
+        <span class="src">Fonte: <a href="https://investnews.com.br/negocios/blindados-a-industria-de-r-35-bilhoes-que-cresce-de-carona-no-medo-de-assaltos-dos-brasileiros/amp/" target="_blank" rel="noopener">InvestNews</a></span>
+      </article>
+
+      <article class="item" data-cat="mercado">
+        <div class="meta"><span class="tag">Mercado</span><span class="date">Jun–ago/2026</span></div>
+        <h3>BYD Song Plus lidera o ranking de veículos mais blindados</h3>
+        <p>No primeiro trimestre, o SUV elétrico híbrido da BYD ficou na frente de modelos tradicionais do segmento. A lista dos dez mais é composta principalmente por SUVs. No semestre, a ordem das três primeiras posições se manteve. São Paulo e Rio de Janeiro concentram 78% do mercado nacional.</p>
+        <ul class="rank" aria-label="Ranking do 1º trimestre de 2026">
+          <li><b>1</b>BYD Song Plus</li><li><b>2</b>Toyota Corolla Cross</li><li><b>3</b>Jeep Commander</li><li><b>4</b>Jeep Compass</li>
+        </ul>
+        <span class="src">Fontes: <a href="https://www.vrum.com.br/noticias/2026/06/7443656-veja-top-10-carros-mais-blindados-do-brasil-em-2026.html" target="_blank" rel="noopener">Vrum</a> · <a href="https://www.diariodepernambuco.com.br/dptrends/?p=33432" target="_blank" rel="noopener">Diario de Pernambuco</a></span>
+      </article>
+
+      <article class="item" data-cat="mercado">
+        <div class="meta"><span class="tag">Mercado</span><span class="date">2026</span></div>
+        <h3>Eletrificados mudam o processo de blindagem</h3>
+        <p>A GWM entrou no ranking das marcas mais procuradas. Híbridos e elétricos exigem cuidados extras na engenharia da blindagem, e a maior oferta de modelos compatíveis ampliou o público: a participação feminina se aproxima de metade dos clientes.</p>
+        <span class="src">Fontes: <a href="https://mecanicaonline.com.br/tag/abrablin/" target="_blank" rel="noopener">Mecânica Online</a> · <a href="https://paraibabusiness.com.br/byd-song-plus-lidera-ranking-dos-carros-mais-blindados-do-brasil-em-2026/" target="_blank" rel="noopener">Paraíba Business</a></span>
+      </article>
+
+      <article class="item" data-cat="blindadoras">
+        <div class="meta"><span class="tag">Blindadoras</span><span class="date">2026</span></div>
+        <h3>Blindadoras disputam homologação das montadoras e ampliam fábricas</h3>
+        <p>Num mercado fragmentado, as maiores empresas buscam a homologação das montadoras para se diferenciar. Ao mesmo tempo, precisam atender uma variedade crescente de modelos, o que complica o processo produtivo.</p>
+        <span class="src">Fonte: <a href="https://investnews.com.br/negocios/blindados-a-industria-de-r-35-bilhoes-que-cresce-de-carona-no-medo-de-assaltos-dos-brasileiros/amp/" target="_blank" rel="noopener">InvestNews</a></span>
+      </article>
+
+      <article class="item" data-cat="mercado">
+        <div class="meta"><span class="tag">Mercado</span><span class="date">Abr–mai/2026</span></div>
+        <h3>Webmotors lança concierge de blindagem; buscas por blindados novos crescem</h3>
+        <p>O serviço gratuito orienta o cliente do início ao fim, com parceiros homologados, fotos de cada etapa e ajuda com a documentação. No Paraná, as visitas a anúncios de blindados 0 km subiram 16,5% no primeiro semestre, segundo levantamento da própria plataforma.</p>
+        <span class="src">Fontes: <a href="https://www.abcdacomunicacao.com.br/webmotors-lanca-novo-servico-para-facilitar-blindagem-de-veiculos-em-todo-o-brasil/" target="_blank" rel="noopener">ABC da Comunicação</a> · <a href="https://www.bemparana.com.br/carros/buscas-por-carros-blindados-crescem-16-no-parana" target="_blank" rel="noopener">Bem Paraná</a></span>
+      </article>
+
+      <article class="item" data-cat="mercado">
+        <div class="meta"><span class="tag">Mercado</span><span class="date">2026</span></div>
+        <h3>Abrablin elege a primeira mulher presidente</h3>
+        <p>Andréia Canassa assume a associação na gestão 2026–2028, com Natália Pereira como vice. Entre as prioridades estão ampliar o reconhecimento do setor e fortalecer o papel institucional da entidade.</p>
+        <span class="src">Fonte: <a href="https://www.autodata.com.br/?p=100718" target="_blank" rel="noopener">Autodata</a></span>
+      </article>
+
+      <article class="item" data-cat="regulamentacao">
+        <div class="meta"><span class="tag">Regulamentação</span><span class="prio">Alta</span><span class="date">04/05/2026</span></div>
+        <h3>Portarias COLOG nº 290 e nº 294 de 2026: novas normas e transição</h3>
+        <p>A Portaria 290 foi publicada no DOU em 7 de maio e define blindadora, fabricante e locadora de veículo blindado, além do papel do SICOVAB. O Termo de Responsabilidade de Blindagem deve ser assinado por responsável técnico com registro no CREA. A Portaria 294 traz regras de transição. Vale conferir com a equipe de documentação e o responsável técnico o que muda na rotina.</p>
+        <span class="src">Fontes: <a href="https://www.legisweb.com.br/legislacao/?id=495406" target="_blank" rel="noopener">Legisweb</a> · <a href="https://diretolegaliza.com/?p=13971" target="_blank" rel="noopener">Direto Legaliza</a></span>
+      </article>
+
+      <article class="item" data-cat="regulamentacao">
+        <div class="meta"><span class="tag">Regulamentação</span><span class="prio">Média</span><span class="date">Fev/2026</span></div>
+        <h3>Projeto de lei prevê teto solar fixo e proíbe reautoclavagem de vidros</h3>
+        <p>A Comissão de Segurança Pública da Câmara aprovou o texto, que ainda segue sua tramitação. O teto solar blindado teria de ser peça única e fixa, com a mesma proteção do restante do carro. Vidros com bolhas ou descolamento seriam substituídos por peça nova, com rastreabilidade do material descartado. O texto também autoriza a blindagem parcial.</p>
+        <span class="src">Fonte: <a href="https://www.vrum.com.br/noticias/2026/02/7353035-blindagem-no-brasil-deve-receber-novas-regras-confira.html" target="_blank" rel="noopener">Vrum</a></span>
+      </article>
+
+      <article class="item" data-cat="regulamentacao">
+        <div class="meta"><span class="tag">Regulamentação</span><span class="date">Jan/2026</span></div>
+        <h3>Consulta pública da DFPC sobre avaliação da conformidade de produtos controlados</h3>
+        <p>A consulta nº 04/2025 foi encerrada em 21 de janeiro e trata das regras de certificação dos produtos controlados pelo Exército. A discussão continua no portal Brasil Participativo, em endereço que a DFPC divulgará.</p>
+        <span class="src">Fonte: <a href="https://www.gov.br/participamaisbrasil/consulta-publica-n-04-revisao-da-portaria-n-189-eme-de-18-de-agosto-de-2020-avaliacao-da-conformidade-de-produtos-controlados-pelo-exercito" target="_blank" rel="noopener">Brasil Participativo</a></span>
+      </article>
+
+      <article class="item" data-cat="regulamentacao">
+        <div class="meta"><span class="tag">Regulamentação</span><span class="date">Mar/2026</span></div>
+        <h3>Importação: mudança no tratamento administrativo da DFPC desde 6 de março</h3>
+        <p>A Notícia Siscomex nº 014/2026 alterou o tratamento aplicado a importações de um item sujeito à anuência da DFPC. Quem importa insumos controlados deve checar se o código NCM usado está entre os afetados.</p>
+        <span class="src">Fonte: <a href="https://www.fazcomex.com.br/npi/alteracao-de-tratamento-administrativo-da-dfpc-em-2026/" target="_blank" rel="noopener">Fazcomex</a></span>
+      </article>
+
+      <article class="item" data-cat="materiais">
+        <div class="meta"><span class="tag">Materiais</span><span class="prio">Média</span><span class="date">Jan/2026</span></div>
+        <h3>Polímeros de alta resistência ganham espaço sobre o aço</h3>
+        <p>Polietileno de ultra-alto peso molecular, aramidas e outros polímeros reduzem o peso da blindagem sem perder proteção. A modernização dos processos e as soluções modulares, que permitem blindagem parcial ou escalonada conforme o orçamento, devem tornar o serviço mais acessível.</p>
+        <span class="src">Fonte: <a href="https://www.vrum.com.br/noticias/2026/01/7327051-novos-materiais-prometem-deixar-a-blindagem-automotiva-mais-leve-e-acessivel.html" target="_blank" rel="noopener">Vrum</a></span>
+      </article>
+
+      <article class="item" data-cat="materiais">
+        <div class="meta"><span class="tag">Materiais</span><span class="date">2026</span></div>
+        <h3>Revisão científica reúne avanços em compósitos de aramida</h3>
+        <p>O artigo, publicado na Applied Composite Materials, cobre arquiteturas de reforço, combinações com polietileno, vidro, carbono e cerâmicas, revestimentos com nanomateriais e fluidos de espessamento por cisalhamento, relacionando cada modificação à absorção de energia e aos modos de falha.</p>
+        <span class="src">Fonte: <a href="https://ouci.dntb.gov.ua/works/leLPdkqV/" target="_blank" rel="noopener">Applied Composite Materials (registro OUCI)</a></span>
+      </article>
+
+      <article class="item" data-cat="eventos">
+        <div class="meta"><span class="tag">Eventos</span><span class="prio">Alta</span><span class="date">14–15/10/2026</span></div>
+        <h3>EXPOBLINDAGEM 2026, no Transamérica Expo Center (São Paulo)</h3>
+        <p>Feira e programação técnica sobre toda a cadeia da blindagem automotiva. Algumas matérias antigas citam outras datas e local, de uma edição anterior, então confirme ingresso e agenda no site oficial.</p>
+        <span class="src">Fontes: <a href="https://expoblindagem.com.br/" target="_blank" rel="noopener">Site oficial</a> · <a href="https://visitesaopaulo.com/evento/expoblindagem-2026/" target="_blank" rel="noopener">Visite São Paulo</a></span>
+      </article>
+
+      <article class="item" data-cat="eventos internacional">
+        <div class="meta"><span class="tag">Eventos</span><span class="date">21–23/10/2026</span></div>
+        <h3>Future Forces 2026, em Praga, terá fabricantes de veículos blindados</h3>
+        <p>A International Armored Group confirmou presença com blindados civis e táticos, vidro balístico e veículos de transporte de valores. O foco da feira é defesa e segurança.</p>
+        <span class="src">Fonte: <a href="https://www.future-forces-forum.com/useful/news/4380" target="_blank" rel="noopener">Future Forces Forum</a></span>
+      </article>
+
+      <article class="item" data-cat="internacional">
+        <div class="meta"><span class="tag">Internacional</span><span class="date">2026</span></div>
+        <h3>Consultorias estimam mercado global de blindados em torno de US$ 10 bilhões</h3>
+        <p>Uma consultoria projeta US$ 10,27 bilhões em 2026 para veículos blindados, crescendo 6,2% ao ano. Outra estima US$ 10,5 bilhões para blindagem veicular em 2026, chegando a US$ 16 bilhões em 2035. As definições diferem e incluem uso militar, então servem só como ordem de grandeza.</p>
+        <span class="src">Fontes: <a href="https://www.gii.co.jp/report/tbrc1991081-armored-vehicles-global-market-report.html" target="_blank" rel="noopener">Global Industry Insights</a> · <a href="https://www.gminsights.com/zh/industry-analysis/vehicle-armor-market" target="_blank" rel="noopener">Global Market Insights</a></span>
+      </article>
+
+      <p class="empty" id="empty" hidden>Nenhum item nesta categoria na edição de hoje.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-alertas">
+    <div class="section-head"><h2 id="h-alertas">Alertas sugeridos</h2><span class="mono">Para o Google Alerts</span></div>
+    <p class="lead">Crie um alerta para cada busca abaixo, com frequência diária, idioma português e região Brasil. O resumo chega por e-mail toda manhã, sem depender deste painel.</p>
+    <div class="alerts">
+      <div class="alert"><code>"blindagem automotiva"</code><button class="copy" type="button">Copiar</button></div>
+      <div class="alert"><code>Abrablin</code><button class="copy" type="button">Copiar</button></div>
+      <div class="alert"><code>Carbon blindagem OR "C Blindados" OR Avallon OR Revo</code><button class="copy" type="button">Copiar</button></div>
+      <div class="alert"><code>SICOVAB OR "Portaria 290" blindagem</code><button class="copy" type="button">Copiar</button></div>
+      <div class="alert"><code>DFPC blindagem</code><button class="copy" type="button">Copiar</button></div>
+      <div class="alert"><code>"veículos blindados"</code><button class="copy" type="button">Copiar</button></div>
+      <div class="alert"><code>"vidro balístico" OR "vidro blindado"</code><button class="copy" type="button">Copiar</button></div>
+      <div class="alert"><code>aramida OR polietileno blindagem</code><button class="copy" type="button">Copiar</button></div>
+      <div class="alert"><code>EXPOBLINDAGEM</code><button class="copy" type="button">Copiar</button></div>
+    </div>
+  </section>
+
+  <div class="note">
+    <p><b>Sobre esta edição.</b> A busca geral não trouxe muitas notícias dos últimos dias. A exceção é o pedido de recuperação extrajudicial da Carbon, de 7 de outubro. O restante reúne o que há de mais recente e relevante entre fevereiro e outubro de 2026. Itens sem data exata estão marcados só com o ano. Números de mercado vêm da Abrablin, repassados pela imprensa.</p>
+  </div>
+
+  <footer>
+    <p>Para atualizar, peça na conversa: "atualiza o painel". A nova edição substitui esta no mesmo link.</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var chips = document.querySelectorAll('.chip');
+  var items = document.querySelectorAll('.item');
+  var count = document.getElementById('count');
+  var empty = document.getElementById('empty');
+
+  function apply(filter) {
+    var shown = 0;
+    items.forEach(function (it) {
+      var cats = (it.getAttribute('data-cat') || '').split(' ');
+      var ok = filter === 'todas' || cats.indexOf(filter) !== -1;
+      it.hidden = !ok;
+      if (ok) shown++;
+    });
+    count.textContent = shown + (shown === 1 ? ' item' : ' itens');
+    empty.hidden = shown !== 0;
+  }
+  chips.forEach(function (c) {
+    c.addEventListener('click', function () {
+      chips.forEach(function (o) { o.setAttribute('aria-pressed', o === c ? 'true' : 'false'); });
+      apply(c.getAttribute('data-filter'));
+    });
+  });
+  apply('todas');
+
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.parentNode.querySelector('code');
+      var text = code.textContent;
+      var done = function () { btn.textContent = 'Copiado'; setTimeout(function () { btn.textContent = 'Copiar'; }, 1500); };
+      var fallback = function () {
+        var r = document.createRange();
+        r.selectNodeContents(code);
+        var s = window.getSelection();
+        s.removeAllRanges();
+        s.addRange(r);
+        btn.textContent = 'Selecionado';
+        setTimeout(function () { btn.textContent = 'Copiar'; }, 1500);
+      };
+      try {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } catch (e) { fallback(); }
+    });
+  });
+})();
+</script>
+
+</body></html>
